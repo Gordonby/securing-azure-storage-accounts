@@ -47,7 +47,6 @@ When an immutable storage policy is in place, it should not be possible to delet
 
 Soft-deleted data is billed at the same rate as active data.
 
-
 ## Protecting a storage account
 
 ### Delete locks
@@ -66,6 +65,8 @@ They can be applied at the Management Group level, which also affords additional
 Azure Policies are leveraged for the control plane deployment operations. They can be used to ensure the configurations identified above are mandatory through Append and Deny assignments.
 
 Policies can be assigned at the Resource Group, Subscription or Management Group scope. Assigning a policy at a higher scope prevents users that only have permissions at lower scopes from making exemptions/changes to the assignment.
+
+A list of community/microsoft Azure Policy definitions can be seen on [AzAdvertizer](https://www.azadvertizer.net/azpolicyadvertizer_all.html#%7B%22col_7%22%3A%7B%22flt%22%3A%22deleteRetentionPolicy%22%7D%7D)
 
 ### Soft delete policy definition
 
