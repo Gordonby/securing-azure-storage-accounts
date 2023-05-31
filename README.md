@@ -10,6 +10,8 @@ The scenario is scoped to Azure Blob data in Azure Storage Accounts, Backup is o
 
 [Geo-zone redundant](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy#geo-zone-redundant-storage) replicatates to a secondary region to mitigate primary region data-loss scenarios.
 
+> GZRS should be used for providing maximum durability for business critical data
+
 ### Cost
 
 This pricing illustration is for capacity only, based on 1TB block blob storage in UK South. Pricing correct as of 31st May 2023, averaged monthly cost.
@@ -25,10 +27,12 @@ GZRS | Hot | £35.48
 
 ### Immutable Storage Policy
 
-There are two methods of implementing immutable storage;
+There are two methods of implementing immutable (WORM) storage;
 
 1. Time Based - When the interval is known
 2. Legal hold - When the interval is unknown
+
+Policies are applied at the Storage Container level.
 
 ## Protecting files from deletion
 
@@ -67,6 +71,14 @@ Azure Policies are leveraged for the control plane deployment operations. They c
 ### Soft delete policy definition
 
 A policy to ensure a Soft Delete period of 365 days.
+
+```json
+{}
+```
+
+### Delete lock policy definition
+
+A DINE policy to ensure a delete-lock is created on storage accounts.
 
 ```json
 {}
