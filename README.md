@@ -6,11 +6,11 @@ The scenario is scoped to Azure Blob data in Azure Storage Accounts, Backup is o
 
 This repository includes Infrastructure as Code assets in addition to describing the concepts, and showing the imposed controls.
 
-## Durablity
+## Durability
 
-[Zone redundant](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy#zone-redundant-storage) storage offers the highest storage SLA and spreads 3 copies of your data over 3 availability zones. [Locally redudant](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy#locally-redundant-storage) on the other hand keeps 3 copies of your data in the same data center.
+[Zone redundant](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy#zone-redundant-storage) storage offers the highest storage SLA and spreads 3 copies of your data over 3 availability zones. [Locally redundant](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy#locally-redundant-storage) on the other hand keeps 3 copies of your data in the same data center.
 
-[Geo-zone redundant](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy#geo-zone-redundant-storage) replicatates to a secondary region to mitigate primary region data-loss scenarios.
+[Geo-zone redundant](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy#geo-zone-redundant-storage) replicates to a secondary region to mitigate primary region data-loss scenarios.
 
 > GZRS should be used for providing maximum durability for business critical data
 
@@ -53,7 +53,7 @@ Soft-deleted data is billed at the same rate as active data.
 
 ### Delete locks
 
-Delete locks are a simple way to prevent Storage Accounts from being inadvertantly deleted. Delete locks are commonly used to protect production services from erroneous deployment actions. They are however very quick to remove by a user with the right RBAC permissions.
+Delete locks are a simple way to prevent Storage Accounts from being inadvertently deleted. Delete locks are commonly used to protect production services from erroneous deployment actions. They are however very quick to remove by a user with the right RBAC permissions.
 
 ### Deny Role Assignments
 
@@ -104,12 +104,11 @@ The bicep file [storage.bicep](storage.bicep) shows how to create a Storage Acco
 
 After implementing the protections above, the data in your storage accounts will be well protected.
 
-Risks 
-
+Malicious users that can obtain high level access can systematically remove the controls before deleting a storage account.
 - With the right permissions, users can exclude resources from Azure Policy Assignments
 - Users with standing access at the Management Group level can remove deny assignments.
 
-Ways to mititage;
+Ways to mitigate;
 
 - Remove standing access to production environments and leverage [Privileged Identity Management (PIM)](https://learn.microsoft.com/en-us/azure/active-directory/privileged-identity-management/pim-configure) for RBAC role elevation.
 - [Resource Guard](https://learn.microsoft.com/azure/backup/multi-user-authorization?pivots=vaults-recovery-services-vault&tabs=azure-portal) (PIM feature) in Azure Backup
