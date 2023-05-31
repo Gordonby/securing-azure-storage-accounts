@@ -23,7 +23,7 @@ ZRS | Hot | £19.71
 GRS | Hot | £31.21
 GZRS | Hot | £35.48
 
-## Protecting files from being overwritten/deletion
+## Protecting blobs from being overwritten/deletion
 
 ### Immutable Storage Policy
 
@@ -32,9 +32,12 @@ There are two methods of implementing immutable (WORM) storage;
 1. Time Based - When the interval is known
 2. Legal hold - When the interval is unknown
 
-Policies are applied at the Storage Container level.
+Attempted Operation | Result | Message
+------------------- | ------ | -------
+Overwrite | ![overwrite error](assets/immutable-worm.png) | This operation is not permitted as the blob is immutable due to a policy
+Delete | ![delete error](assets/immutable-worm-delete.png) | Failed to delete 1 out of 1 blobs. This operation is not permitted as the blob is immutable due to a policy. Policies are applied at the Storage Container level.
 
-## Protecting files from deletion
+## Protecting blobs from deletion
 
 ### Soft delete
 
