@@ -1,4 +1,4 @@
-# securing-azure-storage-accounts
+# Securing Azure Storage Accounts
 
 This repo delves into the various protections that are available in Azure for protecting business critical data.
 
