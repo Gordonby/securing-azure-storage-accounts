@@ -1,6 +1,6 @@
 # securing-azure-storage-accounts
 
-This repo delves into the various protections that are available in Azure from protecting business critical data.
+This repo delves into the various protections that are available in Azure for protecting business critical data.
 
 The scenario is scoped to Azure Blob data in Azure Storage Accounts, Backup is out of scope.
 
