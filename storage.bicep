@@ -3,7 +3,7 @@ param location string = resourceGroup().location
 param uniqueSuffix string = uniqueString(resourceGroup().id, deployment().name, nameseed)
 
 resource storageaccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
-  name: 'st${nameseed}${uniqueSuffix}}'
+  name: take('st${nameseed}${uniqueSuffix}}',24)
   location: location
   kind: 'StorageV2'
   sku: {
@@ -28,7 +28,8 @@ resource storageaccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
       resource worm 'immutabilityPolicies' = {
         name: 'default'
         properties: {
-          allowProtectedAppendWrites: false
+          allowProtectedAppendWritesAll: true
+          immutabilityPeriodSinceCreationInDays: 4096
         }
       }
     }
