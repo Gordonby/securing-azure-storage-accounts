@@ -62,6 +62,8 @@ They can be applied at the Management Group level, which also affords additional
 
 Azure Policies are leveraged for the control plane deployment operations. They can be used to ensure the configurations identified above are mandatory through Append and Deny assignments.
 
+Policies can be assigned at the Resource Group, Subscription or Management Group scope. Assigning a policy at a higher scope prevents users that only have permissions at lower scopes from making exemptions/changes to the assignment.
+
 ### Soft delete policy definition
 
 A policy to ensure a Soft Delete period of 365 days.
