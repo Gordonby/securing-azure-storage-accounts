@@ -44,12 +44,6 @@ When an immutable storage policy is in place, it should not be possible to delet
 
 Soft-deleted data is billed at the same rate as active data.
 
-#### Alerting
-
-In the event data is deleted, we can capture this event.
-
-1. Notification
-2. Automatic undelete
 
 ## Protecting a storage account
 
@@ -111,3 +105,9 @@ Ways to mititage
 
 - Leverage PIM 
 - Notifications
+
+### Notifying on blob delete
+
+An event grid subscription can be created to take remediation or notification actions.
+
+![blob delete event](assets/eventgrid.png)
