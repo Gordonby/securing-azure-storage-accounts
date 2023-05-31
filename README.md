@@ -1,7 +1,25 @@
 # securing-azure-storage-accounts
 
-Storage use case, receiving incremental files into a storage account that are invaluable.
-Data protection is paramount, secondary consideration is cost as the growth of the storage account is 10Tb/day.
+This repo delves into the various protections that are available in Azure from protecting business critical data.
+
+The scenario is scoped to Azure Blob data in Azure Storage Accounts, Backup is out of scope.
+
+## Durablity
+
+[Zone redundant](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy#zone-redundant-storage) storage offers the highest storage SLA and spreads 3 copies of your data over 3 availability zones. [Locally redudant](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy#locally-redundant-storage) on the other hand keeps 3 copies of your data in the same data center.
+
+[Geo-zone redundant](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy#geo-zone-redundant-storage) replicatates to a secondary region to mitigate primary region data-loss scenarios.
+
+### Cost
+
+This pricing illustration is for capacity only, based on 1TB block blob storage in UK South. Pricing correct as of 31st May 2023, averaged monthly cost.
+
+Redundancy | Access Tier | Cost 
+---------- | ----------- | ----
+LRS | Hot | £15.60
+ZRS | Hot | £19.71
+GRS | Hot | £31.21
+GZRS | Hot | £35.48
 
 ## Protecting files from being overwritten/deletion
 
