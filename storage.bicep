@@ -34,3 +34,11 @@ resource storageaccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
     }
   } 
 }
+
+resource lock 'Microsoft.Authorization/locks@2020-05-01' = {
+  name: 'noDelete'
+  scope: storageaccount
+  properties: {
+    level: 'CanNotDelete'
+  }
+}

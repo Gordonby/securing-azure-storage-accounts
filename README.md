@@ -92,6 +92,12 @@ A policy to ensure a Legal Hold Immutable Storage Policy is applied to all Conta
 {}
 ```
 
+## Summary
+
+The bicep file [storage.bicep](storage.bicep) shows how to create a Storage Account with the configuration.
+
+[azPolicy-softdelete.bicep](azPolicy-softdelete.bicep) creates a Subscription Scoped Azure Policy to address the Soft Delete configuration with `deny` and `modify` policy effects.
+
 ## Remaining Risks
 
 After implementing the protections above, the data in your storage accounts will be well protected.
