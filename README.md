@@ -4,6 +4,8 @@ This repo delves into the various protections that are available in Azure for pr
 
 The scenario is scoped to Azure Blob data in Azure Storage Accounts, Backup is out of scope.
 
+This repository includes Infrastructure as Code assets in addition to describing the concepts, and showing the imposed controls.
+
 ## Durablity
 
 [Zone redundant](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy#zone-redundant-storage) storage offers the highest storage SLA and spreads 3 copies of your data over 3 availability zones. [Locally redudant](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy#locally-redundant-storage) on the other hand keeps 3 copies of your data in the same data center.
