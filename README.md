@@ -41,7 +41,7 @@ Delete | ![delete error](assets/immutable-worm-delete.png) | Failed to delete 1 
 
 ### Soft delete
 
-When an immutable storage policy is in place, it should not be possible to delete files in containers that have the policy applied. For containers in the storage account that do not have an immutable storage policy, Soft Delete is the next level of protection. Is also serves as a "safety net" in the event of Storage Policies being removed and files subsequently being deleted. 
+When an immutable storage policy is in place, it should not be possible to delete files in containers that have the policy applied. For containers in the storage account that do not have an immutable storage policy, Soft Delete is the next level of protection. Is also serves as a "safety net" in the unlikely event of Storage Policies being removed and blobs subsequently being deleted. 
 
 #### Cost
 
@@ -53,7 +53,7 @@ Soft-deleted data is billed at the same rate as active data.
 
 Delete locks are a simple way to prevent Storage Accounts from being inadvertantly deleted. Delete locks are commonly used to protect production services from erroneous deployment actions. They are however very quick to remove by a user with the right RBAC permissions.
 
-### Deny Role Assignment
+### Deny Role Assignments
 
 Deny assignments prevent users from performing specific Azure resource actions even if another role assignment grants them access. This means we can create a Deny Role Assignment to prevent users from performing operations like `Storage Account delete` and `Lock removal` at specific scopes.
 
