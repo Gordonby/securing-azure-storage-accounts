@@ -29,7 +29,7 @@ GZRS | Hot | £35.48
 
 ### Immutable Storage Policy
 
-There are two methods of implementing immutable (WORM) storage;
+There are two methods of [implementing immutable (WORM) storage](https://learn.microsoft.com/azure/storage/blobs/immutable-storage-overview);
 
 1. Time Based - When the interval is known
 2. Legal hold - When the interval is unknown
