@@ -38,7 +38,7 @@ resource azpDefEnableSoft 'Microsoft.Authorization/policyDefinitions@2021-06-01'
       then: {
         effect: 'modify'
         details : {
-          conflictEffect: 'audit'
+          conflictEffect: 'deny'
           roleDefinitionIds: [
             '/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c' //Contribut
           ]
