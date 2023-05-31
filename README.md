@@ -106,16 +106,18 @@ After implementing the protections above, the data in your storage accounts will
 
 Risks 
 
-- Users can exclude resources from Azure Policy Assignments
+- With the right permissions, users can exclude resources from Azure Policy Assignments
 - Users with standing access at the Management Group level can remove deny assignments.
 
-Ways to mititage
+Ways to mititage;
 
-- Leverage PIM 
-- Notifications
+- Remove standing access to production environments and leverage [Privileged Identity Management (PIM)](https://learn.microsoft.com/en-us/azure/active-directory/privileged-identity-management/pim-configure) for RBAC role elevation.
+- [Resource Guard](https://learn.microsoft.com/azure/backup/multi-user-authorization?pivots=vaults-recovery-services-vault&tabs=azure-portal) (PIM feature) in Azure Backup
+- Notifications on Azure events such as blob/container delete
 
 ### Notifying on blob delete
 
 An event grid subscription can be created to take remediation or notification actions.
 
 ![blob delete event](assets/eventgrid.png)
+
