@@ -34,10 +34,24 @@ There are two methods of [implementing immutable (WORM) storage](https://learn.m
 1. Time Based - When the interval is known
 2. Legal hold - When the interval is unknown
 
+Legal holds can be applied and removed at any time by users with sufficient access. Time based policies are much more rigorous in that once placed in the locked state all data is protected until the retention time period has passed. After the retention period has passed the data can then be deleted.
+
+> When you create a time based immutable storage lock it is created in the unlocked state. You must explicitly put the policy in the locked state.
+
+#### Effect of an immutable storage policy - unlocked state
+
 Attempted Operation | Result | Message
 ------------------- | ------ | -------
 Overwrite | ![overwrite error](assets/immutable-worm.png) | This operation is not permitted as the blob is immutable due to a policy
 Delete | ![delete error](assets/immutable-worm-delete.png) | Failed to delete 1 out of 1 blobs. This operation is not permitted as the blob is immutable due to a policy. Policies are applied at the Storage Container level.
+
+#### Effect of an immutable storage policy - locked state
+
+Whilst the policy exists, and is enforced in the unlocked state, moving to the locked state provides absolute protection.
+
+![locked state confirmation](assets/locking-policy.png)
+
+> Deleting a locked immutability policy is not allowed, the only way is to delete the container after deleting all expired blobs inside the policy locked container. During testing of time based immutable policies, use a low number of days for the retention period.
 
 ## Protecting blobs from deletion
 
@@ -70,41 +84,17 @@ Policies can be assigned at the Resource Group, Subscription or Management Group
 
 A list of community/microsoft Azure Policy definitions can be seen on [AzAdvertizer](https://www.azadvertizer.net/azpolicyadvertizer_all.html#%7B%22col_7%22%3A%7B%22flt%22%3A%22deleteRetentionPolicy%22%7D%7D)
 
-### Soft delete policy definition
-
-A policy to ensure a Soft Delete period of 365 days.
-
-```json
-{}
-```
-
-### Delete lock policy definition
-
-A DINE policy to ensure a delete-lock is created on storage accounts.
-
-```json
-{}
-```
-
-### Immutable policy definition
-
-A policy to ensure a Legal Hold Immutable Storage Policy is applied to all Containers.
-
-```json
-{}
-```
-
 ## Summary
 
-The bicep file [storage.bicep](storage.bicep) shows how to create a Storage Account with the configuration.
+Time based, locked immutable policies provide the ultimate level of protection for your data, but create an rigid configuration that needs to be right for the data and your business so should be adopted carefully.
+
+The bicep file [storage.bicep](storage.bicep) shows how to create a Storage Account with several of the configurations discussed.
 
 [azPolicy-softdelete.bicep](azPolicy-softdelete.bicep) creates a Subscription Scoped Azure Policy to address the Soft Delete configuration with `deny` and `modify` policy effects.
 
-## Remaining Risks
+### Remaining Risks
 
-After implementing the protections above, the data in your storage accounts will be well protected.
-
-Malicious users that can obtain high level access can systematically remove the controls before deleting a storage account.
+Depending on the controls selected, malicious users could obtain high level access can systematically remove the controls before deleting a storage account.
 - With the right permissions, users can exclude resources from Azure Policy Assignments
 - Users with standing access at the Management Group level can remove deny assignments.
 
