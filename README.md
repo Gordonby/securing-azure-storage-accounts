@@ -85,6 +85,8 @@ Policies can be assigned at the Resource Group, Subscription or Management Group
 
 A list of community/microsoft Azure Policy definitions can be seen on [AzAdvertizer](https://www.azadvertizer.net/azpolicyadvertizer_all.html#%7B%22col_7%22%3A%7B%22flt%22%3A%22deleteRetentionPolicy%22%7D%7D)
 
+To apply one of the Azure Policies, such as the data protection for blobs you'll need to create the Policy Definition in your environment and then create an assignment.
+
 ## Summary
 
 Time based, locked immutable policies provide the ultimate level of protection for your data, but create an rigid configuration that needs to be right for the data and your business so should be adopted carefully.

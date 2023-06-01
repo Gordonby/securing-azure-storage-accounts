@@ -2,13 +2,22 @@ targetScope = 'subscription'
 
 param location string = deployment().location
 
+@allowed(['blob','container'])
+param softDeleteType string = 'blob'
+
+var softDeleteTypeMap = {
+  blob: 'deleteRetentionPolicy'
+  container: 'containerDeleteRetentionPolicy'
+}
+
+var softDeleteTypeAlias = softDeleteTypeMap[softDeleteType]
 
 resource azpDefEnableSoft 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
-  name: 'storage-soft-delete-mustbe-enabled'
+  name: 'storage-${softDeleteType}-soft-delete-mustbe-enabled'
   scope: subscription()
   properties: {
-    description: 'Storage account soft delete must be enabled'
-    displayName: 'Storage account soft delete must be enabled'
+    description: 'Storage ${softDeleteType} soft delete must be enabled'
+    displayName: 'Storage -${softDeleteType} soft delete must be enabled'
     mode: 'All'
     metadata: {
       category: 'Storage'
@@ -23,8 +32,8 @@ resource azpDefEnableSoft 'Microsoft.Authorization/policyDefinitions@2021-06-01'
             equals: 'Microsoft.Storage/storageAccounts/blobServices'
           }
           {
-            field: 'Microsoft.Storage/storageAccounts/blobServices/deleteRetentionPolicy.enabled'
-            notEquals: true
+            field: 'Microsoft.Storage/storageAccounts/blobServices/${softDeleteTypeAlias}.enabled'
+            equals: false
           }
         ]
       }
@@ -36,11 +45,11 @@ resource azpDefEnableSoft 'Microsoft.Authorization/policyDefinitions@2021-06-01'
 }
 
 resource azpDefSoft365 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
-  name: 'storage-soft-delete-365-days'
+  name: 'storage-${softDeleteType}-soft-delete-365-days'
   scope: subscription()
   properties: {
-    description: 'Storage account soft delete should be 365 days'
-    displayName: 'Storage account soft delete should be 365 days'
+    description: 'Storage ${softDeleteType} soft delete should be 365 days'
+    displayName: 'Storage ${softDeleteType} soft delete should be 365 days'
     mode: 'All'
     metadata: {
       category: 'Storage'
@@ -57,11 +66,11 @@ resource azpDefSoft365 'Microsoft.Authorization/policyDefinitions@2021-06-01' = 
           {
             anyOf: [
               {
-                field: 'Microsoft.Storage/storageAccounts/blobServices/deleteRetentionPolicy.enabled'
+                field: 'Microsoft.Storage/storageAccounts/blobServices/${softDeleteTypeAlias}.enabled'
                 notEquals: true
               }
               {
-                field: 'Microsoft.Storage/storageAccounts/blobServices/deleteRetentionPolicy.days'
+                field: 'Microsoft.Storage/storageAccounts/blobServices/${softDeleteTypeAlias}.days'
                 notEquals: 365
               }
             ]
@@ -73,17 +82,17 @@ resource azpDefSoft365 'Microsoft.Authorization/policyDefinitions@2021-06-01' = 
         details : {
           conflictEffect: 'deny'
           roleDefinitionIds: [
-            '/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c' //Contribut
+            '/providers/microsoft.authorization/roleDefinitions/17d1049b-9a84-46fb-8f53-869881c3d3ab'
           ]
           operations: [
               {
                 operation: 'addOrReplace'
-                field: 'Microsoft.Storage/storageAccounts/blobServices/deleteRetentionPolicy.enabled'
+                field: 'Microsoft.Storage/storageAccounts/blobServices/${softDeleteTypeAlias}.enabled'
                 value: true
               }
               {
                 operation: 'addOrReplace'
-                field: 'Microsoft.Storage/storageAccounts/blobServices/deleteRetentionPolicy.days'
+                field: 'Microsoft.Storage/storageAccounts/blobServices/${softDeleteTypeAlias}.days'
                 value: 365
             }
           ]
@@ -96,7 +105,7 @@ resource azpDefSoft365 'Microsoft.Authorization/policyDefinitions@2021-06-01' = 
 
 @description('The assignment is what binds the Policy Definition to a scope for enforcement')
 resource azdAssignSoftEnable 'Microsoft.Authorization/policyAssignments@2022-06-01' = {
-  name: 'storage-soft-delete-enabled'
+  name: 'storage-${softDeleteType}-soft-delete-enabled'
   location: location
   scope: subscription()
   properties: {
@@ -109,14 +118,14 @@ resource azdAssignSoftEnable 'Microsoft.Authorization/policyAssignments@2022-06-
 
 @description('The assignment is what binds the Policy Definition to a scope for enforcement')
 resource azdAssignSoft365 'Microsoft.Authorization/policyAssignments@2022-06-01' = {
-  name: 'storage-soft-delete-365'
+  name: 'storage-${softDeleteType}-soft-delete-365'
   location: location
   scope: subscription()
   properties: {
     policyDefinitionId: azpDefSoft365.id
     enforcementMode: 'Default'
-    displayName: 'storage-soft-delete-365'
-    description: 'storage-soft-delete-365'
+    displayName: 'storage-${softDeleteType}-soft-delete-365'
+    description: 'storage-${softDeleteType}-soft-delete-365'
   }
   identity: { //An identity is required as the policy definition uses the MODIFY effect. The role in the defintion will be assigned to this identity during the creation of the assignment
     type: 'SystemAssigned'
