@@ -1,6 +1,7 @@
 param nameseed string = 'mystoragename'
 param location string = resourceGroup().location
 param uniqueSuffix string = uniqueString(resourceGroup().id, deployment().name, nameseed)
+param daysToProtectFor int = 2
 
 resource storageaccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: take('st${nameseed}${uniqueSuffix}}',24)
@@ -29,7 +30,7 @@ resource storageaccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
         name: 'default'
         properties: {
           allowProtectedAppendWritesAll: true
-          immutabilityPeriodSinceCreationInDays: 4096
+          immutabilityPeriodSinceCreationInDays: daysToProtectFor
         }
       }
     }
