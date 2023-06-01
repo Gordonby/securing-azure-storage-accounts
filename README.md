@@ -51,7 +51,8 @@ Whilst the policy exists, and is enforced in the unlocked state, moving to the l
 
 ![locked state confirmation](assets/locking-policy.png)
 
-> Deleting a locked immutability policy is not allowed, the only way is to delete the container after deleting all expired blobs inside the policy locked container. During testing of time based immutable policies, use a low number of days for the retention period.
+> Deleting a locked immutability policy is not allowed, the only way is to delete the container is to wait until the retention period expires and them deleting all expired blobs inside the policy locked container. 
+During testing of time based immutable policies, use a low number of days for the retention period.
 
 ## Protecting blobs from deletion
 
