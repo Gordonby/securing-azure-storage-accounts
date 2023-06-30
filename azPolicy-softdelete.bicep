@@ -28,8 +28,16 @@ resource azpDefEnableSoft 'Microsoft.Authorization/policyDefinitions@2021-06-01'
       if: {
         allOf: [
           {
-            field: 'type'
-            equals: 'Microsoft.Storage/storageAccounts/blobServices'
+            anyOf: [
+              {
+                field: 'type'
+                equals: 'Microsoft.Storage/storageAccounts/blobServices'
+              }
+              {
+                field: 'type'
+                equals: 'Microsoft.Storage/storageAccounts'
+              }
+            ]
           }
           {
             field: 'Microsoft.Storage/storageAccounts/blobServices/${softDeleteTypeAlias}.enabled'
